@@ -72,7 +72,7 @@ class NewPostScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Esraa Gamal',
+                              '${AppCubit.get(context).userModel.name}',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
                             Text(

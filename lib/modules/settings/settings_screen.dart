@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:social_app/layout/cubit/cubit.dart';
 import 'package:social_app/layout/cubit/states.dart';
+import 'package:social_app/modules/friend/friends_screen.dart';
 import 'package:social_app/shared/components/components.dart';
 import 'package:social_app/shared/style/icon_broken.dart';
 
@@ -18,6 +19,7 @@ class SettingScreen extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 height: 190.0,
@@ -63,16 +65,20 @@ class SettingScreen extends StatelessWidget {
               SizedBox(
                 height: 5.0,
               ),
-              Text('${userModel.name}',
+              Center(
+                child: Text('${userModel.name}',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                    )),
+              ),
+              Center(
+                child: Text(
+                  '${userModel.bio}',
                   style: TextStyle(
-                    fontSize: 18.0,
-                  )),
-              Text(
-                '${userModel.bio}',
-                style: TextStyle(
-                    //fontWeight: FontWeight.bold,
-                    fontSize: 14.0,
-                    color: Colors.grey),
+                      //fontWeight: FontWeight.bold,
+                      fontSize: 14.0,
+                      color: Colors.grey),
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -101,12 +107,12 @@ class SettingScreen extends StatelessWidget {
                       child: InkWell(
                         child: Column(
                           children: [
-                            Text('100',
+                            Text('54',
                                 style: TextStyle(
                                     //fontSize: 18.0,
                                     )),
                             Text(
-                              'Posts',
+                              'Photos',
                               style: TextStyle(
                                   //fontWeight: FontWeight.bold,
                                   //fontSize: 14.0,
@@ -120,12 +126,12 @@ class SettingScreen extends StatelessWidget {
                       child: InkWell(
                         child: Column(
                           children: [
-                            Text('100',
+                            Text('5K',
                                 style: TextStyle(
                                     //fontSize: 18.0,
                                     )),
                             Text(
-                              'Posts',
+                              'Followers',
                               style: TextStyle(
                                   //fontWeight: FontWeight.bold,
                                   //fontSize: 14.0,
@@ -139,12 +145,12 @@ class SettingScreen extends StatelessWidget {
                       child: InkWell(
                         child: Column(
                           children: [
-                            Text('100',
+                            Text('465',
                                 style: TextStyle(
                                     //fontSize: 18.0,
                                     )),
                             Text(
-                              'Posts',
+                              'Following',
                               style: TextStyle(
                                   //fontWeight: FontWeight.bold,
                                   //fontSize: 14.0,
@@ -157,6 +163,16 @@ class SettingScreen extends StatelessWidget {
                   ],
                 ),
               ),
+              MaterialButton(
+                onPressed: () {
+                  navigateTo(
+                    context,
+                    FriendsScreen(),
+                  );
+                },
+                child: Text('Friends'),
+                color: Colors.cyan,
+              ),
               Row(
                 children: [
                   Expanded(
@@ -167,15 +183,23 @@ class SettingScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 10.0,),
+                  SizedBox(
+                    width: 10.0,
+                  ),
                   OutlinedButton(
                     onPressed: () {
-                      navigateTo(context, EditeProfileScreen(),);
+                      navigateTo(
+                        context,
+                        EditeProfileScreen(),
+                      );
                     },
-                    child: Icon(IconBroken.Edit,size: 18.0,),
+                    child: Icon(
+                      IconBroken.Edit,
+                      size: 18.0,
+                    ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         );

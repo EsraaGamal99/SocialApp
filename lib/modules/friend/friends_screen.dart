@@ -10,23 +10,26 @@ import '../../shared/style/icon_broken.dart';
 import '../chat_detailes/chat_detailes_screen.dart';
 import '../user_profile/user_profile_screen.dart';
 
-class UsersScreen extends StatelessWidget {
+class FriendsScreen extends StatelessWidget {
   UserModel userModel;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        return ConditionalBuilder(
-          condition: AppCubit.get(context).users.length > 0 ,
-          builder: (context) => ListView.separated(
-            physics: BouncingScrollPhysics(),
-            itemBuilder: (context, index) =>
-                buildChatItem(AppCubit.get(context).users[index], context),
-            separatorBuilder: (context, index) => Divider(),
-            itemCount: AppCubit.get(context).users.length,
+        return Scaffold(
+          appBar: AppBar(title: Text('Friends'),),
+          body: ConditionalBuilder(
+            condition: AppCubit.get(context).users.length > 0,
+            builder: (context) => ListView.separated(
+              physics: BouncingScrollPhysics(),
+              itemBuilder: (context, index) =>
+                  buildChatItem(AppCubit.get(context).users[index], context),
+              separatorBuilder: (context, index) => Divider(),
+              itemCount: AppCubit.get(context).users.length,
+            ),
+            fallback: (context) => Center(child: CircularProgressIndicator()),
           ),
-          fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
     );

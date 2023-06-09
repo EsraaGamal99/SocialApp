@@ -47,8 +47,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
       email: email,
       name: name,
       uId: uId,
-      image: 'https://img.freepik.com/free-vector/cute-valentine-s-day-animal-couple-with-cats_23-2148820247.jpg?w=740&t=st=1685818408~exp=1685819008~hmac=bb36f26eb9cdf2e73563d6973951ef6061ad8cc913bfadbad204fb1fc810f0bb',
-      cover: 'https://img.freepik.com/free-photo/cute-kitten-staring-out-window-playful-curiosity-generative-ai_188544-12520.jpg?w=1380&t=st=1685818406~exp=1685819006~hmac=1f32609e5b4302e29c691d19bc30cb014c5ae03e198774a12900c872dec09ac6',
+      image: 'https://cdn-icons-png.flaticon.com/512/847/847969.png?w=740&t=st=1686120013~exp=1686120613~hmac=ca0d5c8214f5d5c563d6065dcdf2e669a9484b1ac0023c8b520fec708f0a6a81',
+      cover: 'https://img.freepik.com/free-photo/minimal-snowflake-christmas-social-media-banner-with-design-space_53876-160638.jpg?w=1480&t=st=1686120168~exp=1686120768~hmac=c2237f9b52b6cf8587784237bd6712bd695f72a8346ab734fd2d01e178c91da0',
       bio: 'Write your bio ...',
       isVerification: false,
     );

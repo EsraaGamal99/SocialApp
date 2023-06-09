@@ -22,6 +22,16 @@ class GetAllUsersErrorState extends AppStates{
   GetAllUsersErrorState(this.error);
 }
 
+class GetAllChatsLoadingState extends AppStates{}
+
+class GetAllChatsSuccessState extends AppStates{}
+
+class GetAllChatsErrorState extends AppStates{
+  final String error;
+
+  GetAllChatsErrorState(this.error);
+}
+
 class GetPostsLoadingState extends AppStates{}
 
 class GetPostsSuccessState extends AppStates{}
@@ -94,3 +104,21 @@ class CreatePostSuccessState extends AppStates{}
 class CreatePostErrorState extends AppStates{}
 
 class RemovePostImageState extends AppStates{}
+
+//Chats
+
+class SendMessageSuccessState extends AppStates{}
+
+class SendMessageErrorState extends AppStates{}
+
+class GetMessageSuccessState extends AppStates{}
+
+class RemoveChatLoadingState extends AppStates{}
+
+class RemoveChatSuccessState extends AppStates{}
+
+class RemoveChatErrorState extends AppStates{}
+
+
+
+
