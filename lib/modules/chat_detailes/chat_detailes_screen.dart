@@ -6,7 +6,7 @@ import 'package:social_app/layout/cubit/states.dart';
 import 'package:social_app/models/user_model.dart';
 import 'package:social_app/shared/style/colors.dart';
 
-import '../../models/chats_model.dart';
+import '../../models/messages_model.dart';
 import '../../shared/components/constants.dart';
 import '../../shared/style/icon_broken.dart';
 
@@ -56,7 +56,7 @@ class ChatDetailsScreen extends StatelessWidget {
                 ),
               ),
               body: ConditionalBuilder(
-                condition: AppCubit.get(context).message.length >0,
+                condition: AppCubit.get(context).message.length > 0,
                 builder: (context) => Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(

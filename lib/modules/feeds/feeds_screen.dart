@@ -249,65 +249,59 @@ Widget buildPostItem(context, PostModel postModel , index) => Card(
             Row(
               children: [
                 Expanded(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            IconBroken.Heart,
-                            size: 18.0,
-                            color: selectedItemColor,
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text('${AppCubit.get(context).likes[index]}',
-                            style: TextStyle(color: Colors.grey,),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            'Likes',
-                            style: TextStyle(color: Colors.grey,),
-                          ),
-                        ],
-                      ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          IconBroken.Heart,
+                          size: 18.0,
+                          color: selectedItemColor,
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Text('${AppCubit.get(context).likes[index]}',
+                          style: TextStyle(color: Colors.grey,),
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Text(
+                          'Likes',
+                          style: TextStyle(color: Colors.grey,),
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 Expanded(
-                  child: InkWell(
-                    onTap: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Icon(
-                            IconBroken.Chat,
-                            size: 18.0,
-                            color: Colors.amber,
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          IconBroken.Chat,
+                          size: 18.0,
+                          color: Colors.amber,
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
 
-                          Text(
-                            '0',
-                            style: TextStyle(color: Colors.grey,),
-                          ),
-                          SizedBox(
-                            width: 5.0,
-                          ),
-                          Text(
-                            'comments',
-                            style: TextStyle(color: Colors.grey,),
-                          ),
-                        ],
-                      ),
+                        Text('0',
+                          //'${AppCubit.get(context).comments[index]}',
+                          style: TextStyle(color: Colors.grey,),
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Text(
+                          'comments',
+                          style: TextStyle(color: Colors.grey,),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -335,7 +329,7 @@ Widget buildPostItem(context, PostModel postModel , index) => Card(
                     ],
                   ),
                   onTap: () {
-                    navigateTo(context, Commentsection());
+                    navigateTo(context, CommentSection());
 
                   },
                 ),

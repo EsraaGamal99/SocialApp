@@ -107,6 +107,10 @@ class RemovePostImageState extends AppStates{}
 
 //Chats
 
+class SendChatSuccessState extends AppStates{}
+
+class SendChatErrorState extends AppStates{}
+
 class SendMessageSuccessState extends AppStates{}
 
 class SendMessageErrorState extends AppStates{}

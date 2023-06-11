@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:social_app/layout/cubit/states.dart';
+import 'package:social_app/models/chat_model.dart';
+import 'package:social_app/models/comments_model.dart';
 import 'package:social_app/models/post_model.dart';
 import 'package:social_app/modules/chats/chats_screen.dart';
 import 'package:social_app/modules/feeds/feeds_screen.dart';
@@ -12,7 +14,7 @@ import 'package:social_app/modules/new_post/new_post_screen.dart';
 import 'package:social_app/modules/settings/settings_screen.dart';
 import 'package:social_app/modules/users/users_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import '../../models/chats_model.dart';
+import '../../models/messages_model.dart';
 import '../../models/user_model.dart';
 import '../../shared/components/constants.dart';
 
@@ -33,8 +35,8 @@ class AppCubit extends Cubit<AppStates> {
 
   List<String> titles = ['Home', 'Chats', 'New Post', 'Users', 'Settings'];
 
-  void changeBottomNave(index) {
-    if (index == 1) getAllChats();
+  void changeBottomNave({@required int index, String id}) {
+    if (index == 1) getAllUsers();
     if (index == 3) getAllUsers();
     if (index == 2) {
       emit(NewPostState());
@@ -306,6 +308,7 @@ class AppCubit extends Cubit<AppStates> {
   List<PostModel> posts = [];
   List<String> postId = [];
   List<int> likes = [];
+  //List<int> comments = [];
 
   void getPosts() {
     posts = [];
@@ -330,6 +333,8 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
       emit(GetPostsErrorState(error.toString()));
     });
+
+
   }
 
   void likePost(String postId) {
@@ -347,20 +352,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  void commentPost(String postId) {
-    FirebaseFirestore.instance
-        .collection('posts')
-        .doc(postId)
-        .collection('comments')
-        .doc(userModel.uId)
-        .set({
-      'comments': true,
-    }).then((value) {
-      emit(CommentPostSuccessState());
-    }).catchError((error) {
-      emit(CommentPostErrorState(error.toString()));
-    });
-  }
+
 
   List<UserModel> users;
 
@@ -380,26 +372,26 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
-  List<UserModel> chats;
+  List<MessageModel> message = [];
 
-  void getAllChats() {
-    chats = [];
-    emit(GetAllChatsLoadingState());
-
+  void getMessages({
+    @required String receiverId,
+  }) {
     FirebaseFirestore.instance
         .collection('users')
-        .doc()
+        .doc(userModel.uId)
         .collection('chats')
-        .get()
-        .then((value) {
-      value.docs.forEach((element) {
-        if (element.data()['uId'] != userModel.uId)
-          chats.add(UserModel.fromJson(element.data()));
+        .doc(receiverId)
+        .collection('messages')
+        .orderBy('dateTime')
+        .snapshots()
+        .listen((event) {
+      message = [];
+
+      event.docs.forEach((element) {
+        message.add(MessageModel.fromJson(element.data()));
       });
-      emit(GetAllChatsSuccessState());
-    }).catchError((error) {
-      print(error.toString());
-      emit(GetAllChatsErrorState(error.toString()));
+      emit(GetMessageSuccessState());
     });
   }
 
@@ -442,37 +434,38 @@ class AppCubit extends Cubit<AppStates> {
     }).catchError((error) {
       emit(SendMessageErrorState());
     });
+
+    //getAllChats();
   }
 
-  List<MessageModel> message = [];
+  List<UserModel> chats = [];
 
-  void getMessages({
-    @required String receiverId,
-  }) {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(userModel.uId)
-        .collection('chats')
-        .doc(receiverId)
-        .collection('messages')
-        .orderBy('dateTime')
-        .snapshots()
-        .listen((event) {
-      message = [];
-      event.docs.forEach((element) {
-        message.add(MessageModel.fromJson(element.data()));
-      });
-      emit(GetMessageSuccessState());
-    });
-  }
-
-  var remove = false;
+  // void getAllChats() {
+  //   //chats = [];
+  //   emit(GetAllUsersLoadingState());
+  //
+  //   FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(userModel.uId)
+  //       .collection('chats')
+  //       .get()
+  //       .then((value) {
+  //     value.docs.forEach((element) {
+  //       if (element.data()['uId'] != userModel.uId)
+  //         chats.add(UserModel.fromJson(element.data()));
+  //     });
+  //     emit(GetAllChatsSuccessState());
+  //   }).catchError((error) {
+  //     print(error.toString());
+  //     emit(GetAllChatsErrorState(error.toString()));
+  //   });
+  //
+  // }
 
   Future<void> removeChat({
     @required String receiverId,
   }) async {
     message = [];
-    remove = true;
     emit(RemoveChatLoadingState());
 
     var collection = FirebaseFirestore.instance
@@ -483,26 +476,8 @@ class AppCubit extends Cubit<AppStates> {
         .collection('messages');
     var snapShots = await collection.get();
     for (var doc in snapShots.docs) {
-      await doc.reference.delete().then((value) {
-        emit(RemoveChatSuccessState());
-      }).catchError((error) {
-        emit(RemoveChatErrorState());
-      });
+      await doc.reference.delete();
     }
+    emit(RemoveChatSuccessState());
   }
-// void removeChat({@required String receiverId}) {
-//   // FirebaseFirestore.instance
-//   //     .collection('users')
-//   //     .doc(userModel.uId)
-//   //     .collection('chats')
-//   //     .doc(receiverId)
-//   //     .collection('messages')
-//   //     .snapshots().forEach((element) {
-//   //         message.remove(element.docs);
-//   //       });
-//    message=[];
-//      emit(RemoveChatState());
-// }
-
-// message = null;
 }
